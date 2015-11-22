@@ -65,8 +65,11 @@ var routes= function(Asset) {
                 });
             asset.save();
             res.status(201).send(asset);
-        })
+        });
 
+
+
+    androidRouter.route('/:qrId')
         .put(function(req,res){
             Asset.findOne({"qrId":req.params.qrId}, function(err,asset){
                 if(err)
