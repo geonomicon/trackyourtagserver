@@ -2,6 +2,7 @@
 var express = require('express');
 
 var routes= function(Asset) {
+
     var androidRouter=express.Router();
 
     androidRouter.route('/assets')
@@ -56,6 +57,24 @@ var routes= function(Asset) {
             var asset= new Asset({ "qrId" : req.params.qrId});
             asset.save();
             res.status(201).send(asset);
+        })
+
+        .put(function(req,res){
+            Asset.findOne({"qrId":req.params.qrId}, function(err,asset){
+                if(err)
+                {
+                    res.status(500).send(err);
+                }
+                else
+                {
+                    asset.holderemail=req.body.holderemail;
+                    asset.lat=req.body.lat;
+                    asset.long=req.body.long;
+                    asset.save();
+                    res.json(asset);
+
+                }
+            });
         })
 
     .delete(function(req,res){
