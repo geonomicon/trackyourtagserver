@@ -33,6 +33,19 @@ var routes= function(Asset) {
             });
         });
 
+    androidRouter.route('/getall/:qrId')
+        .get(function (req, res) {
+            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset) {
+                if (err) {
+                    res.status(500).send(err);
+                }
+                else {
+
+                    res.json(asset);
+                }
+            });
+        });
+
       androidRouter.route('/:holderemail/:qrId/:lat/:long')
         .put(function(req,res) {
            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
