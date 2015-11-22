@@ -1,6 +1,4 @@
-/**
- * Created by Apoorva on 11/21/2015.
- */
+
 var express = require('express');
 
 var routes= function(Asset) {
@@ -20,21 +18,21 @@ var routes= function(Asset) {
 
     androidRouter.route('/getll/:qrId')
         .get(function (req, res) {
-            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
-                if(err)
-                {
+            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset) {
+                if (err) {
                     res.status(500).send(err);
                 }
-                else
-                {
-                    var ll= { "lat" : asset.lat,
-                        "long" : asset.long };
+                else {
+                    var ll = {
+                        "lat": asset.lat,
+                        "long": asset.long
+                    };
                     res.json(ll);
                 }
             });
         });
 
-   /* androidRouter.route('/:holderemail/:qrId/:lat/:long')
+      androidRouter.route('/:holderemail/:qrId/:lat/:long')
         .put(function(req,res) {
            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
             if(err)
@@ -50,25 +48,8 @@ var routes= function(Asset) {
                 res.json(asset);
             }
             });
-        }); */
-
-    androidRouter.route('/putty/:qrId')
-        .put(function(req,res) {
-            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
-                if(err)
-                {
-                    res.status(500).send(err);
-                }
-                else
-                {
-                    asset.holderemail=req.body.holderemail;
-                    asset.lat=req.body.lat;
-                    asset.long=req.body.long;
-                    asset.save();
-                    res.json(asset);
-                }
-            });
         });
+
 
     androidRouter.route('/:qrId')
         .post(function(req,res){
