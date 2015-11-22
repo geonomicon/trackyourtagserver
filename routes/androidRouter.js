@@ -18,6 +18,22 @@ var routes= function(Asset) {
         });
     });
 
+    androidRouter.route('/getll/:qrId')
+        .get(function (req, res) {
+            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
+                if(err)
+                {
+                    res.status(500).send(err);
+                }
+                else
+                {
+                    var ll= { "lat" : asset.lat,
+                        "long" : asset.long };
+                    res.json(ll);
+                }
+            });
+        });
+
     androidRouter.route('/:holderemail/:qrId/:lat/:long')
         .put(function(req,res) {
            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
