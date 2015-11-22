@@ -34,7 +34,7 @@ var routes= function(Asset) {
             });
         });
 
-    androidRouter.route('/:holderemail/:qrId/:lat/:long')
+   /* androidRouter.route('/:holderemail/:qrId/:lat/:long')
         .put(function(req,res) {
            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
             if(err)
@@ -50,6 +50,24 @@ var routes= function(Asset) {
                 res.json(asset);
             }
             });
+        }); */
+
+    androidRouter.route('/putty/:qrId')
+        .put(function(req,res) {
+            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
+                if(err)
+                {
+                    res.status(500).send(err);
+                }
+                else
+                {
+                    asset.holderemail=req.body.holderemail;
+                    asset.lat=req.body.lat;
+                    asset.long=req.body.long;
+                    asset.save();
+                    res.json(asset);
+                }
+            });
         });
 
     androidRouter.route('/:qrId')
@@ -57,8 +75,27 @@ var routes= function(Asset) {
             var asset= new Asset({ "qrId" : req.params.qrId});
             asset.save();
             res.status(201).send(asset);
-        });
+        })
 
+    .delete(function(req,res){
+            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
+                if(err)
+                {
+                    res.status(500).send(err);
+                }
+                else {
+                    asset.remove(function (err) {
+                        if (err) {
+                            res.status(500).send(err);
+                        }
+                        else {
+                            res.status(204).send("removed");
+                        }
+                    });
+                }
+            });
+
+        });
     return androidRouter;
 };
 
