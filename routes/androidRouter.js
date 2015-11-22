@@ -52,9 +52,17 @@ var routes= function(Asset) {
         });
 
 
-    androidRouter.route('/:qrId')
+    androidRouter.route('/:qrId/:pname/:startloc/:endloc/:qty/:receiveremail')
         .post(function(req,res){
-            var asset= new Asset({ "qrId" : req.params.qrId});
+            var asset= new Asset(
+                { "qrId" : req.params.qrId,
+                    "pname": req.params.pname,
+                    "startloc": req.params.startloc,
+                    "endloc": req.params.endloc,
+                    "qty": req.params.qty,
+                    "receiveremail" : req.params.receiveremail
+
+                });
             asset.save();
             res.status(201).send(asset);
         })
