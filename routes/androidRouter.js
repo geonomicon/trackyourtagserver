@@ -46,24 +46,6 @@ var routes= function(Asset) {
             });
         });
 
-      androidRouter.route('/:holderemail/:qrId/:lat/:long')
-        .put(function(req,res) {
-           Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
-            if(err)
-            {
-                res.status(500).send(err);
-            }
-                else
-            {
-                asset.holderemail=req.params.holderemail;
-                asset.lat=req.params.lat;
-                asset.long=req.params.long;
-                asset.save();
-                res.json(asset);
-            }
-            });
-        });
-
 
     androidRouter.route('/:qrId/:pname/:startloc/:endloc/:qty/:receiveremail')
         .post(function(req,res){
@@ -84,7 +66,7 @@ var routes= function(Asset) {
 
     androidRouter.route('/:qrId')
         .put(function(req,res){
-            Asset.findOne({"qrId":req.params.qrId}, function(err,asset){
+            Asset.findOne({"qrId":req.params.qrId}, function(err,asset){       //ANDROIDPUT
                 if(err)
                 {
                     res.status(500).send(err);
@@ -120,6 +102,10 @@ var routes= function(Asset) {
             });
 
         });
+
+
+
+
     return androidRouter;
 };
 
