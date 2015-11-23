@@ -10,8 +10,8 @@ var holderModel= new Schema({
 
 
     name: { type: String },
-    pass:{type: String},
     email:{type: String},
+    pass:{type: String},
     cno:{type: String}
 });
 

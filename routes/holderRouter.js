@@ -24,8 +24,8 @@ var hroutes= function(Holder) {
         .post(function(req,res){
             var holder= new Holder(
                 { "name" : req.params.name,               //ANGULARPUT
-                    "pass": req.params.pass,
                     "email": req.params.email,
+                    "pass": req.params.pass,
                     "cno": req.params.cno
 
                 });
