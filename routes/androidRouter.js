@@ -1,5 +1,6 @@
 
 var express = require('express');
+var nodemailer = require('nodemailer');
 
 var routes= function(Asset) {
 
@@ -102,6 +103,29 @@ var routes= function(Asset) {
             });
 
         });
+
+    androidRouter.route('/send')
+        .post(function(req,res){
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'malikshukla007@gmail.com',
+                    pass: 'daenerys'
+                }
+            }, {
+                // default values for sendMail method
+                from: 'sender@address',
+                headers: {
+                    'My-Awesome-Header': '123'
+                }
+            });
+            transporter.sendMail({
+                to: 'bhuvanmalik007@gmail.com',
+                subject: 'Asset info',
+                text: 'Your Asset is shipped with the tracking Id : '
+            });
+            });
+
 
 
 
