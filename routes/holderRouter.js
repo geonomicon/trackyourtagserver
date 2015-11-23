@@ -37,16 +37,16 @@ var hroutes= function(Holder) {
         .get(function(req,res){
            Holder.findOne({"pass":req.params.pass,"email":req.params.email},function(err,holder){
               if(err){
-                  res.json("invalid");
+                  res.send("invalid");
               }
               else if(holder){
-                  res.json("valid");
+                  res.send("valid");
 
               }
                   else
                   {
 
-                      res.json("invalid");
+                      res.send("invalid");
                   }
 
            });
