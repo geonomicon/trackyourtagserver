@@ -20,7 +20,7 @@ var hroutes= function(Holder) {
             });
         });
 
-    holderRouter.route('/add/:name/:pass/:email/:cno')
+    holderRouter.route('/add/:name/:email/:pass/:cno')
         .post(function(req,res){
             var holder= new Holder(
                 { "name" : req.params.name,               //ANGULARPUT
