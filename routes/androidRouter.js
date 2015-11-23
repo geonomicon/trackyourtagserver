@@ -61,6 +61,31 @@ var routes= function(Asset) {
                 });
             asset.save();
             res.status(201).send(asset);
+
+
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'trackyourtag007@gmail.com',
+                    pass: 'daenerys'
+                }
+            }, {
+                // default values for sendMail method
+                from: 'sender@address',
+                headers: {
+                    'My-Awesome-Header': '123'
+                }
+            });
+            transporter.sendMail({
+                to: req.params.receiveremail,
+                subject: 'Asset info',
+                text: 'Thank you for using our TRACK YOUR TAG service.' +
+                'Your Asset has been packaged and is ready to move!' +
+                ' Your unique tracking Id is : ' + req.params.qrId + "  Use this is to get the latest updates on the movement of your asset." +
+                " "
+            });
+
+
         });
 
 
@@ -104,12 +129,12 @@ var routes= function(Asset) {
 
         });
 
-    androidRouter.route('/send')
+    androidRouter.route('/send/:receiveremail/:qrId')
         .post(function(req,res){
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: 'malikshukla007@gmail.com',
+                    user: 'trackyourtag007@gmail.com',
                     pass: 'daenerys'
                 }
             }, {
@@ -120,9 +145,12 @@ var routes= function(Asset) {
                 }
             });
             transporter.sendMail({
-                to: 'bhuvanmalik007@gmail.com',
+                to: req.params.receiveremail,
                 subject: 'Asset info',
-                text: 'Your Asset is shipped with the tracking Id : '
+                text: 'Thank you for using our TRACK YOUR TAG service.' +
+                'Your Asset has been packaged and is ready to move!' +
+                ' Your unique tracking Id is : ' + req.params.qrId + "  Use this is to get the latest updates on the movement of your asset." +
+                " "
             });
             });
 
