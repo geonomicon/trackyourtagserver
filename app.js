@@ -6,7 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose=require('mongoose');
 var Asset = require('./models/androidModel');
+var Holder = require('./models/holderModel');
+
 var androidRouter= require('./routes/androidRouter')(Asset);
+var holderRouter= require('./routes/holderRouter')(Holder);
+
 //var users = require('./routes/users');
 
 
@@ -27,6 +31,8 @@ app.use(function(req, res, next) {
 var db=mongoose.connect('mongodb://admin:admin@ds047792.mongolab.com:47792/trackyourtag');
 
 app.use('/droid',androidRouter);
+
+app.use('/h',holderRouter);
 
 app.get('/',function(req,res){
   res.send("Welcome to tyt");
