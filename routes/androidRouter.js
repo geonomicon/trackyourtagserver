@@ -150,6 +150,12 @@ var routes= function(Asset) {
                 'Your Asset has been packaged and is ready to move!' +
                 ' Your unique tracking Id is : ' + req.params.qrId + ' . Use this is to get the latest updates on the movement of your asset.'
 
+            } , function(error,info){
+                if(error){
+                    return console.log(error);
+                }
+                console.log('Message sent: ' + info.response);
+
             });
             });
 
