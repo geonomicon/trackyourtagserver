@@ -81,7 +81,7 @@ var routes= function(Asset) {
                 subject: 'Asset info',
                 text: 'Thank you for using our TRACK YOUR TAG service.' +
                 'Your Asset has been packaged and is ready to move!' +
-                ' Your unique tracking Id is : ' + req.params.qrId + ' . Use this is to get the latest updates on the movement of your asset.'
+                ' Your unique tracking Id is : ' + req.params.qrId + ' . Use this to get the latest updates on the movement of your asset.'
             });
 
 
@@ -148,7 +148,7 @@ var routes= function(Asset) {
                 subject: 'Asset info',
                 text: 'Thank you for using our TRACK YOUR TAG service.' +
                 'Your Asset has been packaged and is ready to move!' +
-                ' Your unique tracking Id is : ' + req.params.qrId + ' . Use this is to get the latest updates on the movement of your asset.'
+                ' Your unique tracking Id is : ' + req.params.qrId + ' . Use this to get the latest updates on the movement of your asset.'
 
             } , function(error,info){
                 if(error){
