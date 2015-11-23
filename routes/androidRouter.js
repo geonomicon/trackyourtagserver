@@ -64,14 +64,14 @@ var routes= function(Asset) {
 
 
             var transporter = nodemailer.createTransport({
-                service: 'gmail',
+                service: 'Gmail',
                 auth: {
                     user: 'trackyourtag007@gmail.com',
                     pass: 'daenerys'
                 }
             }, {
                 // default values for sendMail method
-                from: 'sender@address',
+                from: 'TRACKYOURTAG',
                 headers: {
                     'My-Awesome-Header': '123'
                 }
