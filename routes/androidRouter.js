@@ -5,162 +5,30 @@ var nodemailer = require('nodemailer');
 var routes= function(Asset) {
 
     var androidRouter=express.Router();
+    var androidController = require('../controllers/androidController')(Asset);
 
     androidRouter.route('/assets')
-        .get(function (req, res) {
-        Asset.find(function (err, assets) {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                res.json(assets);
-            }
-        });
-    });
+        .get(androidController.get);
 
     androidRouter.route('/getll/:qrId')
-        .get(function (req, res) {
-            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset) {
-                if (err) {
-                    res.status(500).send(err);
-                }
-                else {
-                    var ll = {
-                        "lat": asset.lat,
-                        "long": asset.long
-                    };
-                    res.json(ll);
-                }
-            });
-        });
+        .get(androidController.getll);
 
     androidRouter.route('/getall/:qrId')
-        .get(function (req, res) {
-            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset) {
-                if (err) {
-                    res.status(500).send(err);
-                }
-                else {
-
-                    res.json(asset);
-                }
-            });
-        });
+        .get(androidController.getall);
 
 
     androidRouter.route('/:qrId/:pname/:startloc/:endloc/:qty/:receiveremail')
-        .post(function(req,res){
-            var asset= new Asset(
-                { "qrId" : req.params.qrId,
-                    "pname": req.params.pname,
-                    "startloc": req.params.startloc,
-                    "endloc": req.params.endloc,
-                    "qty": req.params.qty,
-                    "receiveremail" : req.params.receiveremail
-
-                });
-            asset.save();
-            res.status(201).send(asset);
-
-
-            var transporter = nodemailer.createTransport({
-                service: 'Gmail',
-                auth: {
-                    user: 'trackyourtag007@gmail.com',
-                    pass: 'daenerys'
-                }
-            }, {
-                // default values for sendMail method
-                from: 'TRACKYOURTAG',
-                headers: {
-                    'My-Awesome-Header': '123'
-                }
-            });
-            transporter.sendMail({
-                to: req.params.receiveremail,
-                subject: 'Asset info',
-                text: 'Thank you for using our TRACK YOUR TAG service.' +
-                'Your Asset has been packaged and is ready to move!' +
-                ' Your unique tracking Id is : ' + req.params.qrId + ' . Use this to get the latest updates on the movement of your asset.'
-            });
-
-
-        });
+        .post(androidController.angularpost);
 
 
 
     androidRouter.route('/:qrId')
-        .put(function(req,res){
-            Asset.findOne({"qrId":req.params.qrId}, function(err,asset){       //ANDROIDPUT
-                if(err)
-                {
-                    res.status(500).send(err);
-                }
-                else
-                {
-                    asset.holderemail=req.body.holderemail;
-                    asset.lat=req.body.lat;
-                    asset.long=req.body.long;
-                    asset.save();
-                    res.json(asset);
+        .put(androidController.put)
 
-                }
-            });
-        })
-
-    .delete(function(req,res){
-            Asset.findOne({ "qrId" : req.params.qrId}, function(err,asset){
-                if(err)
-                {
-                    res.status(500).send(err);
-                }
-                else {
-                    asset.remove(function (err) {
-                        if (err) {
-                            res.status(500).send(err);
-                        }
-                        else {
-                            res.status(204).send("removed");
-                        }
-                    });
-                }
-            });
-
-        });
+    .delete(androidController.del);
 
     androidRouter.route('/send/:receiveremail/:qrId')
-        .post(function(req,res){
-            var transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: 'trackyourtag007@gmail.com',
-                    pass: 'daenerys'
-                }
-            }, {
-                // default values for sendMail method
-                from: 'TRACKYOURTAG',
-                headers: {
-                    'My-Awesome-Header': '123'
-                }
-            });
-            transporter.sendMail({
-                to: req.params.receiveremail,
-                subject: 'Asset info',
-                text: 'Thank you for using our TRACK YOUR TAG service.' +
-                'Your Asset has been packaged and is ready to move!' +
-                ' Your unique tracking Id is : ' + req.params.qrId + ' . Use this to get the latest updates on the movement of your asset.'
-
-            } , function(error,info){
-                if(error){
-                    return console.log(error);
-                }
-                console.log('Message sent: ' + info.response);
-
-            });
-            });
-
-
-
+        .post(androidController.testsend);
 
 
     return androidRouter;

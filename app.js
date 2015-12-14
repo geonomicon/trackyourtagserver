@@ -35,7 +35,7 @@ app.use('/droid',androidRouter);
 app.use('/h',holderRouter);
 
 app.get('/',function(req,res){
-  res.send("Welcome to tyt");
+  res.send("Welcome to Track Your Tag");
 });
 
 app.get('/:id/:password',function(req,res){
